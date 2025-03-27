@@ -1,0 +1,35 @@
+name: Deploy Application to Server
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  laravel-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ssh.euitsols.com
+          username: u492-tb7rpjm3nxkw
+          key: |
+            -----BEGIN OPENSSH PRIVATE KEY-----
+            b3BlbnNzaC1rZXktdjEAAAAACmFlczI1Ni1jdHIAAAAGYmNyeXB0AAAAGAAAABBWVNJ038
+            LVWllpaACEU6b6AAAAGAAAAAEAAAAzAAAAC3NzaC1lZDI1NTE5AAAAIDkKY4FT0RAIB2Vo
+            zD4H4gifQTv4HUTWj0gDQ4BPeX42AAAAoKOnMnh3si3Gxo2HxCf8YSqoBiqEM5+op2l7CE
+            GUbdwSlKS4vveWf+LlZHYLNs/naAtGQ38blZJ54o/CyNd5wCuGS4lYdg5JlvLdvYwVr07n
+            ZoiaN7q/bUzFC2g6jDtOC7/sfqYY1vPJzWJc0IGr7qySq9ia4WeuVplXynILp1zOMI6BO7
+            aBAzENNpURKvbw504Gzt/pogV7IPYRHjBtTyE=
+            -----END OPENSSH PRIVATE KEY-----
+
+          port: 18765
+          passphrase: 12qwaszx!@QW##$$
+          script: |
+            cd www/restaurant.euitsols.com/public_html
+            git fetch --all
+            git reset --hard origin/main
+            git pull
